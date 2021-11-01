@@ -1,5 +1,5 @@
 import { createClient } from "contentful";
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
 
 const client = createClient({
@@ -32,11 +32,12 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { recipe: items[0] },
+    revalidate: 1,
   };
 }
 
 const RecipeDetails = ({ recipe }) => {
-//   console.log(recipe);
+  //   console.log(recipe);
 
   const { featureImage, title, cookingTime, ingredients, method } =
     recipe.fields;
@@ -52,22 +53,21 @@ const RecipeDetails = ({ recipe }) => {
         <h2>{title}</h2>
       </div>
       <div className="info">
-          <p>Take about {cookingTime} mins to cook</p>
-          <h3>Ingredients:</h3>
-          {ingredients.map((val,key) => {
-              return (
-                  <span key={key}> {val} </span>
-              )
-          })}
+        <p>Take about {cookingTime} mins to cook</p>
+        <h3>Ingredients:</h3>
+        {ingredients.map((val, key) => {
+          return <span key={key}> {val} </span>;
+        })}
       </div>
 
-        <div className="method">
-            <h3>Method:</h3>
-            <div>{documentToReactComponents(method)}</div>
-        </div>
+      <div className="method">
+        <h3>Method:</h3>
+        <div>{documentToReactComponents(method)}</div>
+      </div>
 
-        <style jsx>{`
-        h2,h3 {
+      <style jsx>{`
+        h2,
+        h3 {
           text-transform: uppercase;
         }
         .banner h2 {
@@ -79,7 +79,7 @@ const RecipeDetails = ({ recipe }) => {
           top: -60px;
           left: -10px;
           transform: rotateZ(-1deg);
-          box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+          box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
         }
         .info p {
           margin: 0;
